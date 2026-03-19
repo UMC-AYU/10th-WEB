@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .nav-bar {
+        display: flex;
+        width: 100%;
+        min-width: 450px;
+        height: 100px;
+        border-radius: 30px;
+        border: solid black 3px;
+        box-sizing: border-box;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .logo-img {
+        width: 50px;
+        height: 50px;
+      }
+      .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .content-name {
+        display: flex;
+        width: 90px;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .content-name:hover {
+        transform: scale(1.1);
+      }
+      .language {
+        display: flex;
+        width: max-content;
+        height: max-content;
+        border-radius: 30px;
+        border: solid black 3px;
+        justify-content: center;
+        align-items: center;
+
+        padding: 5px;
+        gap: 10px;
+      }
+      .language-content {
+        display: flex;
+        width: max-content;
+        height: 3vh;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        border: solid black 3px;
+        padding: 18px 25px;
+        cursor: pointer;
+      }
+      .language-content:hover {
+        background-color: rgb(255, 120, 9);
+        transition-duration: 1s;
+      }
+      .language-content.active {
+        background-color: rgb(255, 120, 9);
+      }
+      @media (max-width: 600px) {
+        .content {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="nav-bar">
+      <div class="logo">
+        <img class="logo-img" src="./그로밋!.JPG" />
+        <div class="logo-name">Aido</div>
+      </div>
+      <div class="content">
+        <div class="content-name cat">고양이 친구들</div>
+        <div class="content-name alert">출시 알림 받기</div>
+      </div>
+      <div class="language">
+        <button class="language-content ko active">KO</button>
+        <button class="language-content en">EN</button>
+      </div>
+    </div>
+
+    <script>
+      const buttons = document.querySelectorAll(".language-content");
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
