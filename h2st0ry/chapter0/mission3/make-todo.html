@@ -31,7 +31,18 @@
     const todolist = document.querySelector(".todolist-items");
     const completeList = document.querySelector(".completelist-items");
 
+    let isComposing = false;
+
+    input.addEventListener("compositionstart", () => {
+      isComposing = true;
+    });
+
+    input.addEventListener("compositionend", () => {
+      isComposing = false;
+    });
+
     input.addEventListener("keydown", (e) => {
+      if (isComposing) return;
       if (e.key === "Enter") {
         const value = input.value.trim();
         if (value !== "") {
