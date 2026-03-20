@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="make-todo.css" />
+  </head>
+
+  <body>
+    <div class="todo-container">
+      <header>UMC Study Plan</header>
+      <main>
+        <hr />
+        <input id="textInput" placeholder="스터디 계획을 작성해 보세요!" />
+        <div class="listcontent">
+          <section class="todolist">
+            <div class="todolist-title">해야 할 일</div>
+            <div class="todolist-items"></div>
+          </section>
+          <section class="completelist">
+            <div class="completelist-title">해낸 일</div>
+            <div class="completelist-items"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script>
+    const input = document.querySelector("#textInput");
+    const todolist = document.querySelector(".todolist-items");
+    const completeList = document.querySelector(".completelist-items");
+
+    let isComposing = false;
+
+    input.addEventListener("compositionstart", () => {
+      isComposing = true;
+    });
+
+    input.addEventListener("compositionend", () => {
+      isComposing = false;
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (isComposing) return;
+      if (e.key === "Enter") {
+        const value = input.value.trim();
+        if (value !== "") {
+          const newList = document.createElement("div");
+          newList.classList.add("todolist-item");
+
+          const text = document.createElement("span");
+          text.innerText = value;
+
+          const button = document.createElement("button");
+          button.classList.add("complete-btn");
+          button.type = "button";
+          button.innerText = "완료";
+
+          newList.appendChild(text);
+          newList.appendChild(button);
+
+          todolist.appendChild(newList);
+          input.value = "";
+        }
+      }
+    });
+
+    todolist.addEventListener("click", (e) => {
+      if (e.target.classList.contains("complete-btn")) {
+        const item = e.target.parentElement;
+
+        completeList.appendChild(item);
+        e.target.innerText = "삭제";
+        e.target.classList.remove("complete-btn");
+        e.target.classList.add("delete-btn");
+      }
+    });
+
+    completeList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete-btn")) {
+        const item = e.target.parentElement;
+        item.remove();
+      }
+    });
+  </script>
+</html>
