@@ -39,12 +39,14 @@ const createTodoElement = (todo, isDone) => {
     li.classList.add("render-container__item");
     li.textContent = todo.text;
     const button = document.createElement("button");
-    button.classList.add("todo-container__button");
+    button.classList.add("render-container__item-button");
     if (isDone) {
         button.textContent = "삭제";
+        button.style.backgroundColor = "#dc3545";
     }
     else {
         button.textContent = "완료";
+        button.style.backgroundColor = "#28a745";
     }
     button.addEventListener("click", () => {
         if (isDone) {

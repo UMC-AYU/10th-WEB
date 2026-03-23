@@ -62,7 +62,7 @@ const createTodoElement = (todo: Todo, isDone: boolean): HTMLLIElement => {
   li.textContent = todo.text;
 
   const button = document.createElement("button");
-  button.classList.add("render-container__button");
+  button.classList.add("render-container__item-button");
 
   if (isDone) {
     // 완료된 상태일 때
