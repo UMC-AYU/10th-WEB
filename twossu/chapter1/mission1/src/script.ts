@@ -13,16 +13,16 @@ let todos: Todo[] = [];
 let doneTasks: Todo[] = [];
 
 // 할 일 목록 렌더링 하는 함수를 정의
-const renderTasks = (): void => {
+const renderTasks = () => {
   todoList.innerHTML = "";
   doneList.innerHTML = "";
 
-  todos.forEach((todo): void => {
+  todos.forEach((todo) => {
     const li = createTodoElement(todo, false);
     todoList.appendChild(li);
   });
 
-  doneTasks.forEach((todo): void => {
+  doneTasks.forEach((todo) => {
     const li = createTodoElement(todo, true);
     doneList.appendChild(li);
   });
@@ -34,27 +34,27 @@ const getTodoText = (): string => {
 };
 
 // 할 일 추가 처리 함수
-const addTodo = (text: string): void => {
+const addTodo = (text: string) => {
   todos.push({ id: Date.now(), text });
   todoInput.value = "";
   renderTasks();
 };
 
 // 할 일 상태 변경(완료로 이동)
-const completeTodo = (todo: Todo): void => {
+const completeTodo = (todo: Todo) => {
   todos = todos.filter((t): boolean => t.id !== todo.id);
   doneTasks.push(todo);
   renderTasks();
 };
 
 // 완료된 할 일 삭제 함수
-const deleteTodo = (todo: Todo): void => {
+const deleteTodo = (todo: Todo) => {
   doneTasks = doneTasks.filter((t): boolean => t.id !== todo.id);
   renderTasks();
 };
 
 // 할 일 아이템 생성 함수 (완료 여부에 따라 버튼 텍스트나 색상 설정)
-const createTodoElement = (todo: Todo, isDone: boolean): HTMLElement => {
+const createTodoElement = (todo: Todo, isDone: boolean) => {
   const li = document.createElement("li");
   li.classList.add("render-container__item");
 
@@ -74,7 +74,7 @@ const createTodoElement = (todo: Todo, isDone: boolean): HTMLElement => {
     button.style.backgroundColor = "#28a745";
   }
 
-  button.addEventListener("click", (): void => {
+  button.addEventListener("click", () => {
     if (isDone) {
       deleteTodo(todo);
     } else {
@@ -88,7 +88,7 @@ const createTodoElement = (todo: Todo, isDone: boolean): HTMLElement => {
 };
 
 // 폼 제출 이벤트 리스너
-todoForm.addEventListener("submit", (event: Event): void => {
+todoForm.addEventListener("submit", (event: Event) => {
   event.preventDefault();
   const text = getTodoText();
   if (text) {
