@@ -1,5 +1,5 @@
 import Button from "../Button/Button";
-import type { Task } from "../../context/TodoContext";
+import type { Task } from "../../context/TodoProvider";
 
 interface TodoItemProps {
   task: Task;
@@ -13,7 +13,7 @@ const TodoItem = ({ task, mode, onAction }: TodoItemProps) => {
   };
 
   return (
-    <div className="flex justify-between items-center bg-white rounded-xl p-3 gap-2 ">
+    <div className="flex justify-between items-center bg-amber-100 rounded-xl p-3 gap-2 ">
       <span>{task.text}</span>
       <Button mode={mode} onClick={handleAction}>
         {mode === "complete" ? "완료" : "삭제"}

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import "./Button.css";
 
 interface ButtonProps {
   mode: "add" | "complete" | "delete";
