@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: rgb(205, 220, 225);
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.todo-container {
+  display: flex;
+  width: 80%;
+  max-width: 800px;
+  min-width: 400px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.todo-container__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.todo-container__form {
+  display: flex;
+  width: 70%;
+  height: 40px;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.todo-container__input {
+  flex: 1;
+  padding: 0 12px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: solid #ccc 1px;
+  transition: border 0.2s ease;
+}
+
+.todo-container__input::placeholder {
+  font-style: italic;
+}
+
+.todo-container__button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: rgb(97, 201, 65);
+}
+
+.list-container {
+  display: grid;
+  width: 70%;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.todo-container__section,
+.complete-container__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo-container__title,
+.complete-container__title {
+  border-bottom: solid rgb(201, 224, 240) 1px;
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.todo-container__items,
+.complete-container__items {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-container__item,
+.complete-container__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 8px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.todo-button--complete {
+  background-color: rgb(97, 201, 65);
+}
+
+.todo-button--delete {
+  background-color: #dc3545;
+}
