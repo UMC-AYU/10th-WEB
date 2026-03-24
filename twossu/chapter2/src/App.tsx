@@ -2,13 +2,17 @@ import { useState } from "react";
 import "./App.css";
 import Button from "./components/Button/Button";
 import { useTodo } from "./context/TodoContext";
+import TodoItem from "./components/TodoItem/TodoItem";
 
 function App() {
   const [inputText, setInputText] = useState("");
   const { todos, doneTasks, addTodo, completeTask, deleteTask } = useTodo();
 
   const handleAdd = () => {
-    if (inputText.trim() === "") return;
+    if (inputText.trim() === "") {
+      setInputText("");
+      return;
+    }
     addTodo(inputText);
     setInputText("");
   };
@@ -34,12 +38,12 @@ function App() {
           <h2 className="todo-title">할 일</h2>
           <div className="todo-list">
             {todos.map((task) => (
-              <div key={task.id} className="todo-card">
-                <span>{task.text}</span>
-                <Button mode="complete" onClick={() => completeTask(task)}>
-                  완료
-                </Button>
-              </div>
+              <TodoItem
+                key={task.id}
+                task={task}
+                mode="complete"
+                onAction={completeTask}
+              />
             ))}
           </div>
         </div>
@@ -48,12 +52,12 @@ function App() {
           <h2 className="todo-title">완료</h2>
           <div className="todo-list">
             {doneTasks.map((task) => (
-              <div key={task.id} className="todo-card">
-                <span>{task.text}</span>
-                <Button mode="delete" onClick={() => deleteTask(task)}>
-                  삭제
-                </Button>
-              </div>
+              <TodoItem
+                key={task.id}
+                task={task}
+                mode="delete"
+                onAction={deleteTask}
+              />
             ))}
           </div>
         </div>
