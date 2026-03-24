@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* ===== Todo 컨테이너 ===== */
 .todo-container {
   background: white;
@@ -78,7 +82,7 @@ body {
 
 .render-container__list {
   list-style: none;
-  padding: 0;
+  padding: 0px;
   margin: 0;
 }
 
@@ -87,7 +91,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 8px;
   border-bottom: 1px solid #ddd;
   background: #f9f9f9;
