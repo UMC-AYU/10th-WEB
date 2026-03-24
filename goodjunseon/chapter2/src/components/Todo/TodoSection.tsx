@@ -2,7 +2,6 @@ import type { TodoSectionProps } from "../../types/todo";
 
 const TodoSection = ({
   title,
-  listId,
   items,
   actionLabel,
   actionVariant,
@@ -11,7 +10,7 @@ const TodoSection = ({
   return (
     <div className="render-container__section">
       <h2 className="render-container__title">{title}</h2>
-      <ul id={listId} className="render-container__list">
+      <ul className="render-container__list">
         {items.map((todo) => (
           <li key={todo.id} className="render-container__item">
             <span className="render-container__item-text">{todo.text}</span>

@@ -13,7 +13,6 @@ export type TodoFormProps = {
 
 export type TodoSectionProps = {
   title: string;
-  listId: string;
   items: TodoType[];
   actionLabel: string;
   actionVariant: "complete" | "delete";

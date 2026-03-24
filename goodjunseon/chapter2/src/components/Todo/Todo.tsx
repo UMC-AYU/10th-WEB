@@ -21,7 +21,6 @@ const Todo = () => {
       <div className="render-container">
         <TodoSection
           title="할 일"
-          listId="todo-list"
           items={todos}
           actionLabel="완료"
           actionVariant="complete"
@@ -29,7 +28,6 @@ const Todo = () => {
         />
         <TodoSection
           title="완료"
-          listId="done-list"
           items={doneTodos}
           actionLabel="삭제"
           actionVariant="delete"
