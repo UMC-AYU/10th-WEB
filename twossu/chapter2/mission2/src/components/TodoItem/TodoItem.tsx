@@ -13,7 +13,7 @@ const TodoItem = ({ task, mode, onAction }: TodoItemProps) => {
   };
 
   return (
-    <div className="todo-card">
+    <div className="flex justify-between items-center bg-white rounded-xl p-3 gap-2 ">
       <span>{task.text}</span>
       <Button mode={mode} onClick={handleAction}>
         {mode === "complete" ? "완료" : "삭제"}

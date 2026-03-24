@@ -18,12 +18,11 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <h1>TWOSSU TODO</h1>
-
-      <div className="input-section">
+    <div className="flex flex-col items-center w-[40rem] p-12 bg-pink-200 rounded-xl mx-auto mt-10">
+      <h1 className="text-2xl font-bold mb-6">TWOSSU TODO</h1>
+      <div className="flex w-full h-12 gap-3 mb-8">
         <input
-          className="input"
+          className="flex-1 rounded-xl border border-gray-500 p-4 focus:outline-none "
           placeholder="할 일 입력"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
@@ -32,11 +31,10 @@ function App() {
           할 일 추가
         </Button>
       </div>
-
-      <div className="todo-section">
-        <div className="todo">
-          <h2 className="todo-title">할 일</h2>
-          <div className="todo-list">
+      <div className="flex gap-6 w-full justify-center">
+        <div className="flex flex-col w-60">
+          <h2 className="flex justify-center font-bold mb-4">할 일</h2>
+          <div className="flex flex-col gap-3">
             {todos.map((task) => (
               <TodoItem
                 key={task.id}
@@ -47,10 +45,9 @@ function App() {
             ))}
           </div>
         </div>
-
-        <div className="todo">
-          <h2 className="todo-title">완료</h2>
-          <div className="todo-list">
+        <div className="flex flex-col w-60">
+          <h2 className="flex justify-center font-bold mb-4">완료</h2>
+          <div className="flex flex-col gap-3">
             {doneTasks.map((task) => (
               <TodoItem
                 key={task.id}
