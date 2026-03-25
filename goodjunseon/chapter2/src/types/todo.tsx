@@ -5,24 +5,24 @@ export type TodoType = {
   text: string;
 };
 
-export type TodoFormProps = {
+export interface TodoFormProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-};
+}
 
 export type ActionVariant = "complete" | "delete";
 
-export type ButtonProps = {
+export interface ButtonProps {
   label: string;
   variant: ActionVariant;
   onClick: () => void;
-};
+}
 
-export type TodoSectionProps = {
+export interface TodoSectionProps {
   title: string;
   items: TodoType[];
   actionLabel: string;
   actionVariant: ActionVariant;
   onAction: (todo: TodoType) => void;
-};
+}
