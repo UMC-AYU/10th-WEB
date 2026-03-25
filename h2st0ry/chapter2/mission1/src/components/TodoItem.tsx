@@ -1,11 +1,11 @@
 import type { Todo } from "../types/todo";
 import { useTodo } from "../context/TodoContext";
 
-type Props = {
+interface TodoItemProps {
   item: Todo;
-};
+}
 
-const TodoItem = ({ item }: Props) => {
+const TodoItem = ({ item }: TodoItemProps) => {
   const { completeTodo, deleteTodo } = useTodo();
 
   return (
