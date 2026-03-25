@@ -11,10 +11,18 @@ export type TodoFormProps = {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 };
 
+export type ActionVariant = "complete" | "delete";
+
+export type ButtonProps = {
+  label: string;
+  variant: ActionVariant;
+  onClick: () => void;
+};
+
 export type TodoSectionProps = {
   title: string;
   items: TodoType[];
   actionLabel: string;
-  actionVariant: "complete" | "delete";
+  actionVariant: ActionVariant;
   onAction: (todo: TodoType) => void;
 };

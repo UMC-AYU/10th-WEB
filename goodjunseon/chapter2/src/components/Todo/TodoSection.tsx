@@ -1,4 +1,5 @@
 import type { TodoSectionProps } from "../../types/todo";
+import Button from "./Button";
 
 const TodoSection = ({
   title,
@@ -14,12 +15,11 @@ const TodoSection = ({
         {items.map((todo) => (
           <li key={todo.id} className="render-container__item">
             <span className="render-container__item-text">{todo.text}</span>
-            <button
+            <Button
+              label={actionLabel}
+              variant={actionVariant}
               onClick={(): void => onAction(todo)}
-              className={`render-container__item-button render-container__item-button--${actionVariant}`}
-            >
-              {actionLabel}
-            </button>
+            />
           </li>
         ))}
       </ul>
