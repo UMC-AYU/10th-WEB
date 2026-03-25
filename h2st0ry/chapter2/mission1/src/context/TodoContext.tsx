@@ -31,12 +31,14 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 
   const completeTodo = (id: number) => {
     setTodos((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: true } : t)),
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: true } : todo,
+      ),
     );
   };
 
   const deleteTodo = (id: number) => {
-    setTodos((prev) => prev.filter((t) => t.id !== id));
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
   return (
