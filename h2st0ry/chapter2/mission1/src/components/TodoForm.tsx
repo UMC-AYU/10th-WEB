@@ -1,25 +1,24 @@
-import { useRef } from "react";
+import React, { useState } from "react";
 import { useTodo } from "../context/TodoContext";
 
 const TodoForm = () => {
+  const [input, setInput] = useState("");
   const { addTodo } = useTodo();
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const value = inputRef.current?.value || "";
-    if (!value.trim()) return;
+    if (!input.trim()) return;
 
-    addTodo(value);
-
-    if (inputRef.current) inputRef.current.value = "";
+    addTodo(input);
+    setInput("");
   };
 
   return (
     <form className="todo-container__form" onSubmit={handleSubmit}>
       <input
-        ref={inputRef}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
         className="todo-container__input"
         placeholder="할 일을 입력해주세요"
       />
