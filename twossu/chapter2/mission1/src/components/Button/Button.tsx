@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import "./Button.css";
 
+type ButtonMode = "add" | "complete" | "delete";
+
 interface ButtonProps {
-  mode: "add" | "complete" | "delete";
+  mode: ButtonMode;
   children: ReactNode;
   onClick: () => void;
 }
