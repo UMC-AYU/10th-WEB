@@ -1,6 +1,5 @@
 import Button from "../Button/Button";
-import type { Task } from "../../context/TodoContext";
-
+import type { Task } from "../../types/todo";
 interface TodoItemProps {
   task: Task;
   mode: "complete" | "delete";

@@ -1,10 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-
-export type Task = {
-  id: number;
-  text: string;
-};
+import type { Task } from "../types/todo";
 
 interface TodoContextType {
   todos: Task[];
@@ -36,11 +32,11 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <TodoContext.Provider
+    <TodoContext
       value={{ todos, doneTasks, addTodo, completeTask, deleteTask }}
     >
       {children}
-    </TodoContext.Provider>
+    </TodoContext>
   );
 };
 
