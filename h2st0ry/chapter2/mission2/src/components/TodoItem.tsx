@@ -10,23 +10,43 @@ const TodoItem = ({ item }: TodoItemProps) => {
 
   return (
     <div
-      className={
-        item.completed ? "complete-container__item" : "todo-container__item"
-      }
+      className="
+        flex justify-between items-center
+        px-[12px] py-[10px]
+        bg-[rgb(241,241,241)]
+        dark:bg-gray-700
+        rounded-[8px]
+        transition-all
+      "
     >
       <span>{item.text}</span>
 
       {item.completed ? (
         <button
-          className="todo-button--delete "
           onClick={() => deleteTodo(item.id)}
+          className="
+            flex items-center justify-center
+            px-2 py-1
+            text-sm
+            rounded-md
+            bg-red-500 text-white
+            transition-all
+          "
         >
           삭제
         </button>
       ) : (
         <button
-          className="todo-button--complete "
           onClick={() => completeTodo(item.id)}
+          className="
+            flex items-center justify-center
+            px-2 py-1
+            text-sm
+            rounded-md
+            bg-[rgb(97,201,65)] text-white
+            hover:opacity-90
+            transition-all
+          "
         >
           완료
         </button>
