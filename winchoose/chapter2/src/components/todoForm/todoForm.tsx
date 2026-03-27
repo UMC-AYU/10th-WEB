@@ -1,7 +1,7 @@
 import type { ChangeEvent, KeyboardEvent } from "react";
 import Button from "../Button/Button";
 import { useTodo } from "../../context/TodoProvider";
-import "./todoForm.css";
+import { useTheme } from "../../context/ThemeProvider";
 
 interface TodoFormProps {
   title: string;
@@ -9,6 +9,7 @@ interface TodoFormProps {
 
 const TodoForm = ({ title }: TodoFormProps) => {
   const { work, setWork, addTodo } = useTodo();
+  const { isDark, toggleTheme } = useTheme();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setWork(e.target.value);
@@ -21,15 +22,31 @@ const TodoForm = ({ title }: TodoFormProps) => {
   };
 
   return (
-    <div className="todo-form">
-      <h1 className="todo-form__title">{title}</h1>
+    <div className="flex flex-col gap-7">
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-3xl font-black tracking-tight md:text-5xl">{title}</h1>
+        <Button
+          variant="theme"
+          text={isDark ? "라이트 모드" : "다크 모드"}
+          onClick={toggleTheme}
+          className={
+            isDark
+              ? "bg-zinc-100 text-zinc-900 hover:bg-zinc-200"
+              : "bg-zinc-900 text-white hover:bg-zinc-700"
+          }
+        />
+      </div>
 
-      <div className="todo-form__input-group">
+      <div className="flex gap-3">
         <input
           value={work}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          className="todo-form__input"
+          className={`h-14 flex-1 rounded-xl border px-4 text-lg outline-none transition ${
+            isDark
+              ? "border-zinc-700 bg-zinc-800 text-zinc-50 placeholder:text-zinc-400"
+              : "border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400"
+          }`}
           placeholder="할 일 입력"
         />
         <Button variant="add" text="할 일 추가" onClick={addTodo} />
