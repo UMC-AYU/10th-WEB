@@ -1,28 +1,31 @@
-import { Children, useMemo } from "react";
-import type { ReactNode } from "react";
-import { Route } from "./Route";
-import type { RouteProps } from "./Route";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useMemo,
+} from "react";
 import { useCurrentPath } from "./useCurrentPath";
 
-type RoutesProps = {
-  children: ReactNode;
-};
-
-const isRouteElement = (
-  child: any
-): child is React.ReactElement<RouteProps> => {
-  return child?.type === Route;
-};
-
-export const Routes = ({ children }: RoutesProps) => {
+export const Routes = ({ children }: any) => {
   const currentPath = useCurrentPath();
 
+  const routes = Children.toArray(children).filter(isValidElement);
+
   const activeRoute = useMemo(() => {
-    const routes = Children.toArray(children).filter(isRouteElement);
-    return routes.find((route) => route.props.path === currentPath);
-  }, [children, currentPath]);
+    return routes.find(
+      (route: any) => route.props.path === currentPath
+    );
+  }, [routes, currentPath]);
 
-  if (!activeRoute) return null;
+  if (!activeRoute) {
+    const notFoundRoute = routes.find(
+      (route: any) => route.props.path === "/not-found"
+    );
 
-  return activeRoute;
+    return notFoundRoute
+      ? cloneElement(notFoundRoute)
+      : <h1>404</h1>;
+  }
+
+  return cloneElement(activeRoute);
 };
