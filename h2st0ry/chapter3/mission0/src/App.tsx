@@ -1,6 +1,7 @@
 import "./App.css";
 import { Link, Route, Routes } from "./router";
 
+const HomePage = () => <h1>홈페이지</h1>;
 const GromitPage = () => <h1>그로밋 페이지</h1>;
 const WallacePage = () => <h1>월레스 페이지</h1>;
 const McGrawPage = () => <h1>맥그로 페이지</h1>;
@@ -48,6 +49,7 @@ function App() {
       <div className="max-w-2xl mx-auto px-6 py-10">
         <Header />
         <Routes>
+          <Route path="/" component={HomePage} />
           <Route path="/gromit" component={GromitPage} />
           <Route path="/wallace" component={WallacePage} />
           <Route path="/mcgraw" component={McGrawPage} />
