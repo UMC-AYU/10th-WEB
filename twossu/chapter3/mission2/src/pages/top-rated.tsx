@@ -4,7 +4,7 @@ import axios from "axios";
 import MovieCard from "../components/movie-card";
 import LoadingSpinner from "../components/loading-spinner";
 
-const NowPlayingPage = () => {
+const TopRatedPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   // 1. 로딩 상태
   const [isPending, setIsPending] = useState(false);
@@ -19,7 +19,7 @@ const NowPlayingPage = () => {
 
       try {
         const { data } = await axios.get<MovieResponse>(
-          `https://api.themoviedb.org/3/movie/now_playing?language=ko-KR&page=${page}`,
+          `https://api.themoviedb.org/3/movie/top_rated?language=ko-KR&page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`, // 본인 TMDB 토큰으로 교체
@@ -74,4 +74,4 @@ const NowPlayingPage = () => {
   );
 };
 
-export default NowPlayingPage;
+export default TopRatedPage;

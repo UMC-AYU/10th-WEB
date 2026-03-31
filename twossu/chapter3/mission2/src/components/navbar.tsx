@@ -1,14 +1,30 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+const LINKS = [
+  { to: "/", label: "홈" },
+  { to: "/popular", label: "인기 영화" },
+  { to: "/now_playing", label: "상영 중" },
+  { to: "/top_rated", label: "평점 높은" },
+  { to: "/upcoming", label: "개봉 예정" },
+];
 
 const Navbar = () => {
   return (
-    <nav className="">
-      <Link to="/">홈</Link>
-      <Link to="/movies">인기 영화</Link>
-      <Link to="/now-playing">상영 중</Link>
-      <Link to="/top-rated">평점 높은</Link>
-      <Link to="/upcoming">개봉 예정</Link>
-    </nav>
+    <div className="flex gap-3 p-4">
+      {LINKS.map(({ to, label }) => (
+        <NavLink
+          key={to}
+          to={to}
+          className={({
+            isActive,
+          }): "text-[#b2dab1] font-bold" | "text-gray-500" => {
+            return isActive ? "text-[#b2dab1] font-bold" : "text-gray-500";
+          }}
+        >
+          {label}
+        </NavLink>
+      ))}
+    </div>
   );
 };
 
