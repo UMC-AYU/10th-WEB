@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Movie, MovieResponse } from "../types/movie";
 import axios from "axios";
+import MovieCard from "../components/movie-card";
 
 const MoviesPage = () => {
-  const token = import.meta.env.VITE_TMDB_TOKEN;
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const MoviesPage = () => {
         "https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1",
         {
           headers: {
-            Authorization: `Bearer ${token}`, // 본인 TMDB 토큰으로 교체
+            Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`, // 본인 TMDB 토큰으로 교체
           },
         },
       );
@@ -25,13 +25,11 @@ const MoviesPage = () => {
   console.log(movies);
 
   return (
-    <ul>
+    <div className="p-10 grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       {movies?.map((movie) => (
-        <li key={movie.id}>
-          <h1>{movie.title}</h1>
-        </li>
+        <MovieCard key={movie.id} movie={movie} />
       ))}
-    </ul>
+    </div>
   );
 };
 
