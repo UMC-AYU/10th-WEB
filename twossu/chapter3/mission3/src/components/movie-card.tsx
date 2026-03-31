@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Movie } from "../types/movie";
+import { Link } from "react-router-dom";
 
 interface MovieCardprops {
   movie: Movie;
@@ -9,7 +10,8 @@ const MovieCard = ({ movie }: MovieCardprops) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div
+    <Link
+      to={`/movies/${movie.id}`}
       className="relative rounded-xl shadow-lg overflow-hidden cursor-pointer w-44 transition-transform duration-300 hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -27,7 +29,7 @@ const MovieCard = ({ movie }: MovieCardprops) => {
           </p>
         </div>
       )}
-    </div>
+    </Link>
   );
 };
 
