@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Movie, MovieResponse } from "../types/movies";
 import axios from "axios";
 
@@ -143,29 +144,31 @@ const MoviesPage = ({ category }: MoviesPageProps) => {
             key={movie.id}
             className="overflow-hidden rounded-2xl bg-white shadow-md transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
-            <div className="aspect-2/3 bg-zinc-200">
-              {movie.poster_path ? (
-                <img
-                  src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
-                  alt={movie.title}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center px-4 text-center text-sm text-zinc-500">
-                  포스터 이미지가 없어요
-                </div>
-              )}
-            </div>
+            <Link to={`/movies/${movie.id}`} className="block">
+              <div className="aspect-2/3 bg-zinc-200">
+                {movie.poster_path ? (
+                  <img
+                    src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+                    alt={movie.title}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center px-4 text-center text-sm text-zinc-500">
+                    포스터 이미지가 없어요
+                  </div>
+                )}
+              </div>
 
-            <div className="space-y-1 px-3 py-3">
-              <h2 className="line-clamp-2 text-sm font-semibold text-zinc-900">
-                {movie.title}
-              </h2>
-              <p className="text-xs text-zinc-500">{movie.release_date}</p>
-              <p className="text-xs font-medium text-amber-600">
-                평점 {movie.vote_average.toFixed(1)}
-              </p>
-            </div>
+              <div className="space-y-1 px-3 py-3">
+                <h2 className="line-clamp-2 text-sm font-semibold text-zinc-900">
+                  {movie.title}
+                </h2>
+                <p className="text-xs text-zinc-500">{movie.release_date}</p>
+                <p className="text-xs font-medium text-amber-600">
+                  평점 {movie.vote_average.toFixed(1)}
+                </p>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>

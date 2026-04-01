@@ -2,6 +2,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/home";
+import MovieDetailPage from "./pages/movie-detail";
 import NotFound from "./pages/not-found";
 import Movies from "./pages/movies";
 import RootLayout from "./layout/root-layout";
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "movies/upcoming",
         element: <Movies category="upcoming" />,
+      },
+      {
+        path: "movies/:movieId",
+        element: <MovieDetailPage />,
       },
     ],
   },
