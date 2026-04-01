@@ -17,8 +17,20 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "movies",
-        element: <Movies />,
+        path: "movies/popular",
+        element: <Movies category="popular" />,
+      },
+      {
+        path: "movies/now-playing",
+        element: <Movies category="now_playing" />,
+      },
+      {
+        path: "movies/top-rated",
+        element: <Movies category="top_rated" />,
+      },
+      {
+        path: "movies/upcoming",
+        element: <Movies category="upcoming" />,
       },
     ],
   },
