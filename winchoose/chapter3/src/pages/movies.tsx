@@ -143,7 +143,7 @@ const MoviesPage = ({ category }: MoviesPageProps) => {
             key={movie.id}
             className="overflow-hidden rounded-2xl bg-white shadow-md transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
-            <div className="aspect-[2/3] bg-zinc-200">
+            <div className="aspect-2/3 bg-zinc-200">
               {movie.poster_path ? (
                 <img
                   src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
