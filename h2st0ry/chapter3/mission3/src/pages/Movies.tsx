@@ -71,7 +71,7 @@ const MoviesPage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-[#6f472c] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
