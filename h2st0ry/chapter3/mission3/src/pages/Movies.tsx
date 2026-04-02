@@ -104,7 +104,7 @@ const MoviesPage = () => {
           다음
         </button>
       </div>
-      <ul className="m-5 grid grid-cols-6 gap-4">
+      <ul className="m-5 grid grid-cols-5 gap-4">
         {movies.map((movie) => (
           <li
             key={movie.id}
