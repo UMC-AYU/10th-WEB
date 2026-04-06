@@ -6,7 +6,7 @@ const menus = [
   { path: "/movies/now-playing", name: "상영중" },
   { path: "/movies/top-rated", name: "평점높은" },
   { path: "/movies/upcoming", name: "개봉예정" },
-];
+] as const;
 
 const Navbar = () => {
   const baseStyle = "px-2 py-1 rounded-lg transition";
