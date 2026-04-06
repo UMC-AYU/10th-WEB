@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Movie, MovieResponse } from "../types/movie";
-import axios from "axios";
 import { Navigate, useParams, useNavigate } from "react-router-dom";
+import { api } from "../api/api";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -34,13 +34,8 @@ const MoviesPage = () => {
       setError(null);
 
       try {
-        const { data } = await axios.get<MovieResponse>(
-          `https://api.themoviedb.org/3/movie/${endpoint}?language=ko-KR&page=${page}`,
-          {
-            headers: {
-              Authorization: `Bearer YOUR_TOKEN`,
-            },
-          }
+        const { data } = await api.get<MovieResponse>(
+          `/movie/${endpoint}?language=ko-KR&page=${page}`,
         );
 
         setMovies(data.results);

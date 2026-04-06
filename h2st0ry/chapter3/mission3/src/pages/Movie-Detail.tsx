@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { api } from "../api/api";
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();
@@ -18,23 +18,9 @@ const MovieDetailPage = () => {
       setError(null);
 
       try {
-        const movieRes = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`,
-          {
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDI2NWEzYzliM2FkMWI4ZTkyOTc4OGQ5ZTMxMTVlNiIsIm5iZiI6MTc3NDc5NTUxMi4zMjQsInN1YiI6IjY5YzkzYWY4ODExODdkMzE3Y2QzNmNlNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j_CnL1ELlQMVxqI_XWPKEEpLHt8E5v1ATJUYbRt5MW4`,
-            },
-          },
-        );
+        const movieRes = await api.get(`/movie/${movieId}?language=ko-KR`);
 
-        const creditRes = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-          {
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDI2NWEzYzliM2FkMWI4ZTkyOTc4OGQ5ZTMxMTVlNiIsIm5iZiI6MTc3NDc5NTUxMi4zMjQsInN1YiI6IjY5YzkzYWY4ODExODdkMzE3Y2QzNmNlNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j_CnL1ELlQMVxqI_XWPKEEpLHt8E5v1ATJUYbRt5MW4`,
-            },
-          },
-        );
+        const creditRes = await api.get(`/movie/${movieId}/credits`);
 
         setMovie(movieRes.data);
         setCredits(creditRes.data);
