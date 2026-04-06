@@ -1,30 +1,35 @@
 import { useEffect, useState } from "react";
 import type { Movie, MovieResponse } from "../types/movie";
-import { Navigate, useParams, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { api } from "../api/api";
+import { CATEGORY_MAP } from "../constants/category";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
 
   const { category } = useParams();
   const navigate = useNavigate();
 
-  const categoryMap: Record<string, string> = {
-    popular: "popular",
-    "now-playing": "now_playing",
-    "top-rated": "top_rated",
-    upcoming: "upcoming",
-  };
-
-  const endpoint = categoryMap[category || ""];
+  const endpoint = CATEGORY_MAP[category as keyof typeof CATEGORY_MAP];
   const isInvalid = !endpoint;
 
-  useEffect(() => {
-    setPage(1);
-  }, [category]);
+  const handlePrev = () => {
+    setSearchParams({ page: String(Math.max(page - 1, 1)) });
+  };
+
+  const handleNext = () => {
+    setSearchParams({ page: String(page + 1) });
+  };
 
   useEffect(() => {
     if (isInvalid) return;
@@ -73,7 +78,7 @@ const MoviesPage = () => {
     <div>
       <div className="flex justify-center items-center gap-4 mt-10 mb-10">
         <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          onClick={handlePrev}
           disabled={page === 1}
           className="px-4 py-2 bg-[#6f472c] text-white rounded disabled:opacity-30"
         >
@@ -83,7 +88,7 @@ const MoviesPage = () => {
         <span className="text-black">{page} 페이지</span>
 
         <button
-          onClick={() => setPage((prev) => prev + 1)}
+          onClick={handleNext}
           className="px-4 py-2 bg-[#6f472c] text-white rounded"
         >
           다음
