@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../api/api";
+import type { Credits, Movie } from "../types/movie";
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();
 
-  const [movie, setMovie] = useState<any>(null);
-  const [credits, setCredits] = useState<any>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [credits, setCredits] = useState<Credits | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,6 +38,7 @@ const MovieDetailPage = () => {
   if (loading) return <div className="text-center mt-20">로딩중...</div>;
   if (error)
     return <div className="text-center mt-20 text-red-500">{error}</div>;
+  if (!movie) return null;
 
   return (
     <div className="p-10 text-black">

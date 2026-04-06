@@ -13,3 +13,14 @@ export type MovieResponse = {
   total_pages: number;
   total_results: number;
 };
+
+export type Cast = {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+};
+
+export type Credits = {
+  cast: Cast[];
+};
