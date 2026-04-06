@@ -40,7 +40,6 @@ const MoviesPage = () => {
 
         setMovies(data.results);
       } catch (err) {
-        console.error(err);
         setError("영화를 불러오는데 실패했습니다 😢");
       } finally {
         setIsLoading(false);
