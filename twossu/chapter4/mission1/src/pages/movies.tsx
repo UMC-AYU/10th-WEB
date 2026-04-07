@@ -3,6 +3,7 @@ import type { MovieResponse } from "../types/movie";
 import MovieCard from "../components/movie-card";
 import LoadingSpinner from "../components/loading-spinner";
 import { useCustomFetch } from "../hooks/useCustomFetch";
+import Pagination from "../components/pagination";
 
 const MoviesPage = () => {
   const [page, setPage] = useState(1);
@@ -25,18 +26,7 @@ const MoviesPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center gap-6 mt-5">
-        <button
-          className="bg-amber-200 px-6 py-3 rounded-lg shadow-md hover:bg-amber-100 transition-all duration-200 disabled:bg-gray-300 cursor-pointer disabled:cursor-not-allowed"
-          disabled={page === 1}
-          onClick={() => setPage((prev) => prev - 1)}
-        >{`<`}</button>
-        <span>{page} 페이지</span>
-        <button
-          className="bg-amber-200 px-6 py-3 rounded-lg shadow-md hover:bg-amber-100 transition-all duration-200 cursor-pointer "
-          onClick={() => setPage((prev) => prev + 1)}
-        >{`>`}</button>
-      </div>
+      <Pagination page={page} setPage={setPage} />
 
       {isPending ? (
         <div className="flex items-center justify-center h-dvh">
