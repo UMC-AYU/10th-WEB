@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import type { Movie } from "../types/movie";
 import LoadingSpinner from "../components/loading-spinner";
+import { tmdbApi } from "../axios/api";
 
 const MovieDetailPage = () => {
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -14,13 +14,8 @@ const MovieDetailPage = () => {
     const fetchMovieDetail = async () => {
       setIsPending(true);
       try {
-        const { data } = await axios.get<Movie>(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-            },
-          },
+        const { data } = await tmdbApi.get<Movie>(
+          `/movie/${movieId}?language=ko-KR`,
         );
         setMovie(data);
       } catch {

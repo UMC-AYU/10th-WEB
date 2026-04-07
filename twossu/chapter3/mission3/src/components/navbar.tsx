@@ -6,7 +6,7 @@ const LINKS = [
   { to: "/now_playing", label: "상영 중" },
   { to: "/top_rated", label: "평점 높은" },
   { to: "/upcoming", label: "개봉 예정" },
-];
+] as const;
 
 const Navbar = () => {
   return (
@@ -15,11 +15,9 @@ const Navbar = () => {
         <NavLink
           key={to}
           to={to}
-          className={({
-            isActive,
-          }): "text-[#b2dab1] font-bold" | "text-gray-500" => {
-            return isActive ? "text-[#b2dab1] font-bold" : "text-gray-500";
-          }}
+          className={({ isActive }) =>
+            isActive ? "text-[#b2dab1] font-bold" : "text-gray-500"
+          }
         >
           {label}
         </NavLink>

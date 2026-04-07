@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Movie, MovieResponse } from "../types/movie";
-import axios from "axios";
 import MovieCard from "../components/movie-card";
 import LoadingSpinner from "../components/loading-spinner";
+import { tmdbApi } from "../axios/api";
 
 const NowPlayingPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -18,13 +18,8 @@ const NowPlayingPage = () => {
       setIsPending(true);
 
       try {
-        const { data } = await axios.get<MovieResponse>(
-          `https://api.themoviedb.org/3/movie/now_playing?language=ko-KR&page=${page}`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`, // 본인 TMDB 토큰으로 교체
-            },
-          },
+        const { data } = await tmdbApi.get<MovieResponse>(
+          `/movie/now_playing?language=ko-KR&page=${page}`,
         );
         setMovies(data.results);
       } catch {
