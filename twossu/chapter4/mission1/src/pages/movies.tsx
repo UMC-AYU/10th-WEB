@@ -1,35 +1,19 @@
-import { useEffect, useState } from "react";
-import type { Movie, MovieResponse } from "../types/movie";
+import { useState } from "react";
+import type { MovieResponse } from "../types/movie";
 import MovieCard from "../components/movie-card";
 import LoadingSpinner from "../components/loading-spinner";
-import { tmdbApi } from "../axios/api";
+import { useCustomFetch } from "../hooks/useCustomFetch";
 
 const MoviesPage = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  // 1. 로딩 상태
-  const [isPending, setIsPending] = useState(false);
-  // 2. 에러 상태
-  const [isError, setIsError] = useState(false);
-  // 3. 페이지
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setIsPending(true);
+  const { data, isPending, isError } = useCustomFetch(
+    `/movie/popular?language=ko-KR&page=${page}`,
+  );
 
-      try {
-        const { data } = await tmdbApi.get<MovieResponse>(
-          `/movie/popular?language=ko-KR&page=${page}`,
-        );
-        setMovies(data.results);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
-    };
-    fetchMovies();
-  }, [page]);
+  const movieResponse = data as MovieResponse;
+
+  const movies = movieResponse?.results || [];
 
   if (isError) {
     return (

@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Movie } from "../types/movie";
 import LoadingSpinner from "../components/loading-spinner";
-import { tmdbApi } from "../axios/api";
+import { useCustomFetch } from "../hooks/useCustomFetch";
 
 const MovieDetailPage = () => {
-  const [movie, setMovie] = useState<Movie | null>(null);
   const { movieId } = useParams<{ movieId: string }>();
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    const fetchMovieDetail = async () => {
-      setIsPending(true);
-      try {
-        const { data } = await tmdbApi.get<Movie>(
-          `/movie/${movieId}?language=ko-KR`,
-        );
-        setMovie(data);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
-    };
+  const { data, isPending, isError } = useCustomFetch(
+    `/movie/${movieId}?language=ko-KR`,
+  );
 
-    fetchMovieDetail();
-  }, [movieId]);
+  const movie = data as Movie;
 
   if (isError) {
     return (
