@@ -206,10 +206,10 @@ const LoginPage = () => {
             <p className="mt-6 text-center text-sm text-zinc-300">
               아직 계정이 없나요?{" "}
               <Link
-                to="/"
+                to="/signup"
                 className="font-semibold text-[#ff67b8] transition hover:text-[#ff8dcb]"
               >
-                홈으로 돌아가기
+                회원가입하러 가기
               </Link>
             </p>
           </div>

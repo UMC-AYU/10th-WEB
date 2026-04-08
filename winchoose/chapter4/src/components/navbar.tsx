@@ -53,7 +53,7 @@ const Navbar = () => {
             로그인
           </NavLink>
           <NavLink
-            to="/"
+            to="/signup"
             className="rounded-md bg-[#ff3fa2] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#ff5bb0]"
           >
             회원가입
