@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eef2f3;
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.todo-container {
+  background: white;
+  padding: 48px 32px 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: min(900px, calc(100vw - 32px));
+  box-sizing: border-box;
+}

@@ -1,0 +1,34 @@
+.btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add {
+  background-color: #28a745;
+  min-width: 100px;
+}
+
+.btn-complete {
+  background-color: #28a745;
+  min-width: 54px;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  min-width: 54px;
+}
+
+.btn-add:hover,
+.btn-complete:hover {
+  background-color: #218838;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
