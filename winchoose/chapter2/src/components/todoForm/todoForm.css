@@ -1,0 +1,25 @@
+.todo-form__title {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.todo-form__input-group {
+  display: flex;
+  gap: 12px;
+}
+
+.todo-form__input {
+  flex: 1;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid #d5d5d5;
+  border-radius: 10px;
+  font-size: 22px;
+  box-sizing: border-box;
+}
+
+.todo-form__input::placeholder {
+  color: #b3b3b3;
+}
