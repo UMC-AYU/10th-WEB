@@ -102,8 +102,8 @@ const MoviesPage = ({ category }: MoviesPageProps) => {
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-col gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-zinc-900">{title}</h1>
-          <p className="mt-2 text-sm text-zinc-500">{description}</p>
+          <h1 className="text-3xl font-bold text-white">{title}</h1>
+          <p className="mt-2 text-sm text-zinc-300">{description}</p>
         </div>
 
         <div className="flex items-center justify-center gap-4">
@@ -115,7 +115,7 @@ const MoviesPage = ({ category }: MoviesPageProps) => {
           >
             {"<"}
           </button>
-          <p className="min-w-24 text-center text-sm font-semibold text-zinc-700">
+          <p className="min-w-24 text-center text-sm font-semibold text-zinc-200">
             {page} 페이지
           </p>
           <button

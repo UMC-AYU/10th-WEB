@@ -2,6 +2,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/home";
+import LoginPage from "./pages/login";
 import MovieDetailPage from "./pages/movie-detail";
 import NotFound from "./pages/not-found";
 import Movies from "./pages/movies";
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
       },
       {
         path: "movies/popular",

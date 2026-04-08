@@ -184,7 +184,7 @@ const MovieDetailPage = () => {
       </article>
 
       <section className="mt-10">
-        <h2 className="text-3xl font-bold text-zinc-900">감독/출연</h2>
+        <h2 className="text-3xl font-bold text-white">감독/출연</h2>
 
         <ul className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
           {people.map((person) => {
