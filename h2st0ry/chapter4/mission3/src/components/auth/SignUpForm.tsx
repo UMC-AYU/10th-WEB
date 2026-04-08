@@ -95,7 +95,7 @@ const SignUpForm = () => {
             <img
               src={showConfirmPassword ? hideIcon : showIcon}
               alt="toggle"
-              onClick={() => setShowPassword((prev) => !prev)}
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
               className="absolute right-3 top-[13px] w-5 h-5 cursor-pointer"
             />
           </div>
