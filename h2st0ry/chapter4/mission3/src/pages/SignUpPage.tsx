@@ -1,4 +1,4 @@
-import SignUpForm from "../components/auth/SignUpForm";
+import SignUpForm from "../components/signup/SignUpForm";
 import SocialLogin from "../components/auth/SocialLogin";
 import PageHeader from "../components/PageHeader";
 

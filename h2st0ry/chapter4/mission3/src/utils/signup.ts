@@ -1,11 +1,9 @@
 import type { SignUpFormValues } from "../types/auth";
 
-export const validateSignup = (values: SignUpFormValues) => {
-  const errors: Record<keyof SignUpFormValues, string> = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
+export const validateSignup = (
+  values: SignUpFormValues
+): Partial<Record<keyof SignUpFormValues, string>> => {
+  const errors: Partial<Record<keyof SignUpFormValues, string>> = {};
 
   // 이메일
   if (!values.email) {
@@ -22,8 +20,15 @@ export const validateSignup = (values: SignUpFormValues) => {
   }
 
   // 비밀번호 확인
-  if (values.password !== values.confirmPassword) {
+  if (!values.confirmPassword) {
+    errors.confirmPassword = "비밀번호 확인을 입력해주세요.";
+  } else if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+  }
+
+  // 닉네임 확인
+  if (!values.nickname) {
+    errors.nickname = "닉네임을 입력해주세요.";
   }
 
   return errors;

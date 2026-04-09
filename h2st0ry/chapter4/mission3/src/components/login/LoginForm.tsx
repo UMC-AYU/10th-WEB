@@ -1,6 +1,6 @@
 import useForm from "../../hooks/useForm";
 import Button from "../button/Button";
-import LoginInput from "./LoginInput";
+import LoginInput from "../auth/LoginInput";
 
 import { validateLogin } from "../../utils/login";
 import type { LoginFormValues } from "../../types/auth";

@@ -1,4 +1,4 @@
-import LoginForm from "../components/auth/LoginForm.tsx";
+import LoginForm from "../components/login/LoginForm.tsx";
 import SocialLogin from "../components/auth/SocialLogin.tsx";
 import PageHeader from "../components/PageHeader.tsx";
 

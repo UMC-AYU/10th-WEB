@@ -3,13 +3,13 @@ import { useEffect, useState, type ChangeEvent } from "react";
 interface UseFormProps<T> {
   initialValue: T;
   // 값이 올바른지 검증하는 함수
-  validate: (values: T) => Record<keyof T, string>;
+  validate: (values: T) => Partial<Record<keyof T, string>>;
 }
 
 function useForm<T>({ initialValue, validate }: UseFormProps<T>) {
   const [values, setValues] = useState(initialValue);
-  const [touched, setTouched] = useState<Record<string, Boolean>>();
-  const [errors, setErrors] = useState<Record<string, string>>();
+  const [touched, setTouched] = useState<Partial<Record<string, Boolean>>>({});
+  const [errors, setErrors] = useState<Partial<Record<string, string>>>({});
 
   // 사용자가 입력값을 바꿀 때 실행되는 함수
   const handleChange = (name: keyof T, text: string) => {
