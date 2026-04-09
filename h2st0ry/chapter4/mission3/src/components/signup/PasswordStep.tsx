@@ -18,7 +18,8 @@ const PasswordStep = ({
   onNext,
 }: PasswordStepProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  //const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const isDisabled =
     !!errors.password ||
     !!errors.confirmPassword ||
@@ -28,7 +29,7 @@ const PasswordStep = ({
   return (
     <div className="flex flex-col gap-4 w-full max-w-md">
       <div className="flex gap-2 ">
-        <img src={email} className="w-5" />
+        <img src={email} className="w-5 h-5" />
         <h3 className="text-md">{values.email}</h3>
       </div>
 
@@ -55,14 +56,14 @@ const PasswordStep = ({
           label="confirmPassword"
           {...getInputProps("confirmPassword")}
           name="confirmPassword"
-          type="Password"
+          type={showConfirmPassword ? "text" : "password"}
           placeholder="비밀번호를 입력해주세요!"
           error={errors?.confirmPassword}
           touched={touched?.confirmPassword}
         />
         <img
-          src={showPassword ? hideIcon : showIcon}
-          onClick={() => setShowPassword((prev) => !prev)}
+          src={showConfirmPassword ? hideIcon : showIcon}
+          onClick={() => setShowConfirmPassword((prev) => !prev)}
           className="w-5 absolute right-3 top-3.5 cursor-pointer"
         />
       </div>

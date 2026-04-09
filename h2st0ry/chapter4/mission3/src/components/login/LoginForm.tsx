@@ -1,9 +1,12 @@
 import useForm from "../../hooks/useForm";
 import Button from "../button/Button";
 import LoginInput from "../auth/LoginInput";
+import hideIcon from "../../assets/password-hide.png";
+import showIcon from "../../assets/password-show.png";
 
 import { validateLogin } from "../../utils/login";
 import type { LoginFormValues } from "../../types/auth";
+import { useState } from "react";
 
 const LoginForm = () => {
   const { values, errors, touched, getInputProps } = useForm<LoginFormValues>({
@@ -13,6 +16,8 @@ const LoginForm = () => {
     },
     validate: validateLogin,
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = () => {
     console.log(values);
@@ -35,14 +40,21 @@ const LoginForm = () => {
           error={errors?.email}
           touched={touched?.email}
         />
-        <LoginInput
-          label="password"
-          {...getInputProps("password")}
-          className="bg-neutral-900 border border-[#ccc] w-[300px] p-[10px] focus:border-[#807bf] rounded-sm"
-          placeholder={"비밀번호를 입력해주세요!"}
-          error={errors?.password}
-          touched={touched?.password}
-        />
+        <div>
+          <LoginInput
+            label="password"
+            {...getInputProps("password")}
+            className="bg-neutral-900 border border-[#ccc] w-[300px] p-[10px] focus:border-[#807bf] rounded-sm"
+            placeholder={"비밀번호를 입력해주세요!"}
+            error={errors?.password}
+            touched={touched?.password}
+          />
+          <img
+            src={showPassword ? hideIcon : showIcon}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="w-5 absolute right-3 top-3.5 cursor-pointer"
+          />
+        </div>
         <Button type="button" onClick={handleSubmit} disabled={isDisabled}>
           로그인
         </Button>

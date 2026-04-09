@@ -31,14 +31,10 @@ const ProfileStep = ({
         {...getInputProps("nickname")}
         name="nickname"
         type="nickname"
-        placeholder="이메일을 입력해주세요!"
+        placeholder="닉네임을 입력해주세요!"
         error={errors?.nickname}
         touched={touched?.nickname}
       />
-
-      {errors.nickname && (
-        <p className="text-red-500 text-sm">{errors.nickname}</p>
-      )}
 
       <Button type="button" onClick={handleSubmit} disabled={isDisabled}>
         회원가입 완료

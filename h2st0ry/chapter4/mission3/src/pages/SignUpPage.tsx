@@ -1,5 +1,4 @@
 import SignUpForm from "../components/signup/SignUpForm";
-import SocialLogin from "../components/auth/SocialLogin";
 import PageHeader from "../components/PageHeader";
 
 const SignUpPage = () => {
