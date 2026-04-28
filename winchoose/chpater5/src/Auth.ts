@@ -1,15 +1,20 @@
-const TOKEN_KEY = "chapter5_access_token";
-const MOCK_ACCESS_TOKEN = "mission-1-access-token";
+const ACCESS_TOKEN_KEY = "chapter5_access_token";
+const REFRESH_TOKEN_KEY = "chapter5_refresh_token";
 
 export function getAccessToken() {
-  return localStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
-export function saveMockAccessToken() {
-  localStorage.setItem(TOKEN_KEY, MOCK_ACCESS_TOKEN);
-  return MOCK_ACCESS_TOKEN;
+export function getRefreshToken() {
+  return localStorage.getItem(REFRESH_TOKEN_KEY);
 }
 
-export function removeAccessToken() {
-  localStorage.removeItem(TOKEN_KEY);
+export function saveTokens(accessToken: string, refreshToken: string) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+  localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+}
+
+export function removeTokens() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
 }

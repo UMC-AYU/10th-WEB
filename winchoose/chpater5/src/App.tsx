@@ -1,6 +1,8 @@
 import "./App.css";
+import type { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { getAccessToken, removeAccessToken, saveMockAccessToken } from "./Auth";
+import { api, signIn, signUp } from "./api";
+import { getAccessToken, removeTokens } from "./Auth";
 import ProtectedRoute from "./ProtectedRoute";
 
 type Page = "home" | "login" | "me" | "userDetail" | "protected" | "notFound";
@@ -26,10 +28,18 @@ function App() {
 
   useEffect(() => {
     const handleRouteChange = () => setPath(window.location.pathname);
+    const handleAuthExpired = () => {
+      setToken(null);
+      navigate("/login");
+    };
 
     window.addEventListener("popstate", handleRouteChange);
+    window.addEventListener("auth-expired", handleAuthExpired);
 
-    return () => window.removeEventListener("popstate", handleRouteChange);
+    return () => {
+      window.removeEventListener("popstate", handleRouteChange);
+      window.removeEventListener("auth-expired", handleAuthExpired);
+    };
   }, []);
 
   const navigate = (to: string) => {
@@ -37,13 +47,13 @@ function App() {
     setPath(to);
   };
 
-  const login = () => {
-    setToken(saveMockAccessToken());
+  const login = (accessToken: string) => {
+    setToken(accessToken);
     navigate("/my");
   };
 
   const logout = () => {
-    removeAccessToken();
+    removeTokens();
     setToken(null);
     navigate("/");
   };
@@ -76,23 +86,29 @@ function App() {
       {page === "login" && <LoginPage onLogin={login} />}
       {page === "me" && (
         <ProtectedRoute isLoggedIn={isLoggedIn}>
-          <Card title="내 정보 조회" endpoint="GET /v1/users/me">
-            <p>토큰이 있는 사용자만 볼 수 있는 마이페이지입니다.</p>
-          </Card>
+          <ProtectedApiPage
+            title="내 정보 조회"
+            endpoint="GET /v1/users/me"
+            requestPath="/users/me"
+          />
         </ProtectedRoute>
       )}
       {page === "userDetail" && (
         <ProtectedRoute isLoggedIn={isLoggedIn}>
-          <Card title="다른 사용자 정보 조회" endpoint="GET /v1/users/{userId}">
-            <p>현재 조회 중인 사용자 ID는 {getUserId(path)}입니다.</p>
-          </Card>
+          <ProtectedApiPage
+            title="다른 사용자 정보 조회"
+            endpoint="GET /v1/users/{userId}"
+            requestPath={`/users/${getUserId(path)}`}
+          />
         </ProtectedRoute>
       )}
       {page === "protected" && (
         <ProtectedRoute isLoggedIn={isLoggedIn}>
-          <Card title="토큰 인증 테스트" endpoint="GET /v1/auth/protected">
-            <p>로그인 상태라서 보호된 인증 테스트 페이지에 접근했습니다.</p>
-          </Card>
+          <ProtectedApiPage
+            title="토큰 인증 테스트"
+            endpoint="GET /v1/auth/protected"
+            requestPath="/auth/protected"
+          />
         </ProtectedRoute>
       )}
       {page === "notFound" && (
@@ -110,8 +126,8 @@ function HomePage({ isLoggedIn }: { isLoggedIn: boolean }) {
       <p className="eyebrow">Mission 1</p>
       <h1>Protected Route</h1>
       <p>
-        로그인 토큰이 필요한 API 페이지는 보호되고, 비로그인 사용자는 로그인
-        페이지로 리다이렉트됩니다.
+        Access Token이 만료되면 Refresh Token으로 자동 갱신하고, 실패했던
+        요청을 한 번 다시 시도합니다.
       </p>
       <span className={isLoggedIn ? "badge success" : "badge"}>
         {isLoggedIn ? "로그인 상태" : "비로그인 상태"}
@@ -120,14 +136,131 @@ function HomePage({ isLoggedIn }: { isLoggedIn: boolean }) {
   );
 }
 
-function LoginPage({ onLogin }: { onLogin: () => void }) {
+function LoginPage({ onLogin }: { onLogin: (accessToken: string) => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      const tokens = await signIn(email, password);
+      onLogin(tokens.accessToken);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error, "로그인에 실패했습니다."));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignUp = async () => {
+    setErrorMessage("");
+    setIsSigningUp(true);
+
+    try {
+      await signUp(email, password);
+      const tokens = await signIn(email, password);
+      onLogin(tokens.accessToken);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error, "회원가입에 실패했습니다."));
+    } finally {
+      setIsSigningUp(false);
+    }
+  };
+
   return (
     <Card title="로그인" endpoint="POST /v1/auth/signin">
+      <form className="form" onSubmit={handleSubmit}>
+        <label>
+          이메일
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="email@example.com"
+            required
+          />
+        </label>
+        <label>
+          비밀번호
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="password"
+            required
+          />
+        </label>
+        {errorMessage && <p className="error">{errorMessage}</p>}
+        <button className="primary wide" disabled={isLoading}>
+          {isLoading ? "로그인 중..." : "로그인하기"}
+        </button>
+        <button
+          className="ghost wide"
+          type="button"
+          onClick={handleSignUp}
+          disabled={isSigningUp || !email || !password}
+        >
+          {isSigningUp ? "회원가입 중..." : "회원가입 후 로그인"}
+        </button>
+      </form>
+    </Card>
+  );
+}
+
+function ProtectedApiPage({
+  title,
+  endpoint,
+  requestPath,
+}: {
+  title: string;
+  endpoint: string;
+  requestPath: string;
+}) {
+  const [result, setResult] = useState("아직 요청하지 않았습니다.");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const requestProtectedApi = async () => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const response = await api.get(requestPath);
+      setResult(JSON.stringify(response.data.data, null, 2));
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error, "요청에 실패했습니다."));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    requestProtectedApi();
+
+    const intervalId = window.setInterval(() => {
+      requestProtectedApi();
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [requestPath]);
+
+  return (
+    <Card title={title} endpoint={endpoint}>
       <p>
-        미션 확인용 간단 로그인입니다. 버튼을 누르면 mock token이 저장됩니다.
+        401 응답이 오면 axios 응답 인터셉터가 refresh token으로 새 토큰을 받고,
+        이 요청을 자동으로 재시도합니다. 확인하기 쉽도록 3초마다 보호 API를
+        자동 호출합니다.
       </p>
-      <button className="primary wide" onClick={onLogin}>
-        로그인하기
+      <pre>{result}</pre>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      <button className="primary" onClick={requestProtectedApi} disabled={isLoading}>
+        {isLoading ? "요청 중..." : "다시 요청하기"}
       </button>
     </Card>
   );
@@ -149,6 +282,12 @@ function Card({
       {children}
     </section>
   );
+}
+
+function getErrorMessage(error: unknown, fallbackMessage: string) {
+  const axiosError = error as AxiosError<{ message?: string }>;
+
+  return axiosError.response?.data?.message ?? fallbackMessage;
 }
 
 export default App;
