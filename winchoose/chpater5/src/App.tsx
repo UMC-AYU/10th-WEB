@@ -1,15 +1,24 @@
 import "./App.css";
 import type { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { api, signIn, signUp } from "./api";
-import { getAccessToken, removeTokens } from "./Auth";
+import { GOOGLE_LOGIN_URL, api, signIn, signUp } from "./api";
+import { getAccessToken, removeTokens, saveTokens } from "./Auth";
 import ProtectedRoute from "./ProtectedRoute";
 
-type Page = "home" | "login" | "me" | "userDetail" | "protected" | "notFound";
+type Page =
+  | "home"
+  | "login"
+  | "googleCallback"
+  | "me"
+  | "userDetail"
+  | "protected"
+  | "notFound";
 
 function getPage(pathname: string): Page {
   if (pathname === "/") return "home";
   if (pathname === "/login") return "login";
+  if (pathname === "/auth/google/callback") return "googleCallback";
+  if (pathname === "/v1/auth/google/callback") return "googleCallback";
   if (pathname === "/my") return "me";
   if (pathname.startsWith("/users/")) return "userDetail";
   if (pathname === "/auth/protected") return "protected";
@@ -84,6 +93,7 @@ function App() {
 
       {page === "home" && <HomePage isLoggedIn={isLoggedIn} />}
       {page === "login" && <LoginPage onLogin={login} />}
+      {page === "googleCallback" && <GoogleCallbackPage onLogin={login} />}
       {page === "me" && (
         <ProtectedRoute isLoggedIn={isLoggedIn}>
           <ProtectedApiPage
@@ -208,7 +218,45 @@ function LoginPage({ onLogin }: { onLogin: (accessToken: string) => void }) {
         >
           {isSigningUp ? "회원가입 중..." : "회원가입 후 로그인"}
         </button>
+        <div className="divider">또는</div>
+        <button
+          className="google wide"
+          type="button"
+          onClick={() => {
+            window.location.href = GOOGLE_LOGIN_URL;
+          }}
+        >
+          Google로 로그인
+        </button>
       </form>
+    </Card>
+  );
+}
+
+function GoogleCallbackPage({
+  onLogin,
+}: {
+  onLogin: (accessToken: string) => void;
+}) {
+  const [message, setMessage] = useState("Google 로그인 처리 중입니다.");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("accessToken");
+    const refreshToken = params.get("refreshToken");
+
+    if (!accessToken || !refreshToken) {
+      setMessage("Google 로그인 토큰을 받지 못했습니다.");
+      return;
+    }
+
+    saveTokens(accessToken, refreshToken);
+    onLogin(accessToken);
+  }, [onLogin]);
+
+  return (
+    <Card title="Google 로그인" endpoint="GET /v1/auth/google/callback">
+      <p>{message}</p>
     </Card>
   );
 }

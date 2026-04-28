@@ -10,6 +10,8 @@ import {
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/v1";
 
+export const GOOGLE_LOGIN_URL = `${API_BASE_URL}/auth/google/login`;
+
 type ApiResponse<T> = {
   status: boolean;
   statusCode: number;

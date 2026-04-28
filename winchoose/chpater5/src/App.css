@@ -62,6 +62,16 @@ button:hover {
   background: #eff6ff;
 }
 
+.google {
+  color: #1f2937;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+}
+
+.google:hover {
+  background: #f8fafc;
+}
+
 .wide {
   width: 100%;
 }
@@ -129,6 +139,13 @@ pre {
 .error {
   color: #dc2626;
   font-weight: 800;
+}
+
+.divider {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
 }
 
 .badge {
