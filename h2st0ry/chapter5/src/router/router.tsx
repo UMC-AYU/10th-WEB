@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import MemberPage from "../pages/MemberPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import GoogleCallbackPage from "../pages/GoogleCallbackPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             <MemberPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/v1/auth/google/callback",
+        element: <GoogleCallbackPage />,
       },
     ],
   },

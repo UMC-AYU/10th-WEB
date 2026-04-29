@@ -13,11 +13,14 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       await signIn(email, password);
-
       navigate("/member");
     } catch (e) {
       alert("이메일 또는 비밀번호가 올바르지 않습니다.");
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8000/v1/auth/google/login";
   };
 
   return (
@@ -54,6 +57,18 @@ const LoginPage = () => {
           className="bg-[#6f4e37] text-white py-2 rounded-lg hover:bg-[#5a3e2b]"
         >
           로그인
+        </button>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="bg-white border py-2 rounded-lg hover:bg-gray-100 flex items-center justify-center gap-2"
+        >
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="google"
+            className="w-5 h-5"
+          />
+          구글로 로그인
         </button>
       </div>
     </div>
