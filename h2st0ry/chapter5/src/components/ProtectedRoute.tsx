@@ -11,11 +11,9 @@ const ProtectedRoute = ({ children }) => {
         await getMyInfo();
         setIsAuth(true);
       } catch (err) {
-        // 🔥 핵심: 토큰 있으면 "기다려"
         const token = localStorage.getItem("accessToken");
 
         if (token) {
-          // refresh 진행 중일 가능성 → 기다림
           setIsAuth(true);
         } else {
           setIsAuth(false);
