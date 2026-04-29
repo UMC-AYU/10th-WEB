@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^7.8.0",
     "@tailwindcss/vite": "^4.2.4",
+    "axios": "^1.15.2",
     "prisma": "^7.8.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
