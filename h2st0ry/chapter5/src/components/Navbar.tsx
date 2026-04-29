@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     navigate("/");
   };
 
@@ -15,13 +16,8 @@ const Navbar = () => {
         Gromit
       </Link>
 
-      <Link
-        to="/member"
-        className={`hover:text-[#e6d3b3] ${
-          !token ? "opacity-50 pointer-events-none" : ""
-        }`}
-      >
-        구독자 전용
+      <Link to="/member" className={"hover:text-[#e6d3b3]"}>
+        로그인 전용
       </Link>
 
       <div>

@@ -1,24 +1,36 @@
-import { Navigate, useLocation } from "react-router-dom";
-import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { getMyInfo } from "../api/auth";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const token = localStorage.getItem("token");
-  const location = useLocation();
+const ProtectedRoute = ({ children }) => {
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
-  if (!token) {
-    return (
-      <Navigate
-        to="/login"
-        state={{
-          message: "로그인이 필요한 페이지입니다.",
-          from: location.pathname,
-        }}
-        replace
-      />
-    );
-  }
+  useEffect(() => {
+    const check = async () => {
+      try {
+        await getMyInfo();
+        setIsAuth(true);
+      } catch (err) {
+        // 🔥 핵심: 토큰 있으면 "기다려"
+        const token = localStorage.getItem("accessToken");
 
-  return <>{children}</>;
+        if (token) {
+          // refresh 진행 중일 가능성 → 기다림
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+        }
+      }
+    };
+
+    check();
+  }, []);
+
+  if (isAuth === null) return <div>로딩중...</div>;
+
+  if (!isAuth) return <Navigate to="/login" replace />;
+
+  return children;
 };
 
 export default ProtectedRoute;

@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { signIn } from "../api/auth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -9,9 +10,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    localStorage.setItem("token", "1234");
-    navigate("/member");
+  const handleLogin = async () => {
+    try {
+      await signIn(email, password);
+
+      navigate("/member");
+    } catch (e) {
+      alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+    }
   };
 
   return (
